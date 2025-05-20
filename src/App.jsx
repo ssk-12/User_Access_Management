@@ -1,8 +1,18 @@
+import { Button } from "@/components/ui/button";
+// import { Badge } from "@/components/ui/badge";
 function App() {
   return (
     <div className="p-8">
-      <h1 className="text-4xl text-emerald-600 font-bold">Tailwind is working</h1>
-      <button className="bg-emerald-600 text-white px-4 py-2 rounded-md">Click me</button>
+      <h1 className="text-4xl font-bold tracking-tight">Welcome to Shadcn UI</h1>
+      <Button 
+        onClick={() => alert("Hello")} 
+        variant="default"
+        className="mt-4"
+      >
+        Click me
+      </Button>
+      {/* <Badge>Badge</Badge> */}
+      
     </div>
   );
 }
