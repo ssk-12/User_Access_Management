@@ -34,30 +34,30 @@ export default function AdminSoftwarePage() {
   };
 
   if (isLoading) {
-    return <div className="flex justify-center p-8">Loading software data...</div>;
+    return <div className="flex justify-center p-4 sm:p-8 text-sm sm:text-base">Loading software data...</div>;
   }
 
   if (isError) {
-    return <div className="text-red-500 p-8">Error loading software data. Please try again.</div>;
+    return <div className="text-red-500 p-4 sm:p-8 text-sm sm:text-base">Error loading software data. Please try again.</div>;
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Software Management</h1>
+    <div className="container mx-auto px-4 py-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-0">
+        <h1 className="text-xl sm:text-2xl font-bold">Software Management</h1>
         {!showAddForm && (
-          <Button onClick={() => setShowAddForm(true)}>
+          <Button onClick={() => setShowAddForm(true)} className="w-full sm:w-auto text-sm sm:text-base">
             Add New Software
           </Button>
         )}
       </div>
       
       {showAddForm ? (
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Add New Software</CardTitle>
+        <Card className="mb-6 sm:mb-8">
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="text-lg sm:text-xl">Add New Software</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
             <AddSoftwareForm 
               onSuccess={handleSoftwareAdded} 
               onCancel={() => setShowAddForm(false)}
@@ -66,38 +66,48 @@ export default function AdminSoftwarePage() {
         </Card>
       ) : (
         <Card>
-          <CardHeader>
-            <CardTitle>Software List</CardTitle>
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="text-lg sm:text-xl">Software List</CardTitle>
           </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Access Levels</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {softwareList.length === 0 ? (
+          <CardContent className="p-0 sm:p-0">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center py-4">
-                      No software found
-                    </TableCell>
+                    <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">ID</TableHead>
+                    <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">Name</TableHead>
+                    <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">Description</TableHead>
+                    <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">Access Levels</TableHead>
                   </TableRow>
-                ) : (
-                  softwareList.map((software) => (
-                    <TableRow key={software.id}>
-                      <TableCell>{software.id}</TableCell>
-                      <TableCell>{software.name}</TableCell>
-                      <TableCell>{software.description}</TableCell>
-                      <TableCell>{software.accessLevels.join(', ')}</TableCell>
+                </TableHeader>
+                <TableBody>
+                  {softwareList.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={4} className="text-center py-4 text-xs sm:text-sm">
+                        No software found
+                      </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
+                  ) : (
+                    softwareList.map((software) => (
+                      <TableRow key={software.id}>
+                        <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">{software.id}</TableCell>
+                        <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium">{software.name}</TableCell>
+                        <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">
+                          <div className="max-w-[200px] sm:max-w-none truncate">
+                            {software.description}
+                          </div>
+                        </TableCell>
+                        <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">
+                          <div className="max-w-[100px] sm:max-w-none truncate">
+                            {software.accessLevels.join(', ')}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
       )}

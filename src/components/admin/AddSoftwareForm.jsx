@@ -53,17 +53,21 @@ export default function AddSoftwareForm({ onSuccess, onCancel }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel className="text-sm font-medium">Name</FormLabel>
               <FormControl>
-                <Input placeholder="Software name" {...field} />
+                <Input 
+                  placeholder="Software name" 
+                  {...field} 
+                  className="text-sm sm:text-base"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs sm:text-sm" />
             </FormItem>
           )}
         />
@@ -73,18 +77,22 @@ export default function AddSoftwareForm({ onSuccess, onCancel }) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel className="text-sm font-medium">Description</FormLabel>
               <FormControl>
-                <Input placeholder="Software description" {...field} />
+                <Input 
+                  placeholder="Software description" 
+                  {...field} 
+                  className="text-sm sm:text-base"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs sm:text-sm" />
             </FormItem>
           )}
         />
         
         <div className="space-y-2">
-          <Label>Access Levels</Label>
-          <div className="space-y-3">
+          <Label className="text-sm font-medium">Access Levels</Label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
             {accessLevelOptions.map((option) => (
               <FormField
                 key={option.id}
@@ -108,8 +116,9 @@ export default function AddSoftwareForm({ onSuccess, onCancel }) {
                           }
                           field.onChange(updatedValue);
                         }}
+                        className="h-4 w-4 sm:h-5 sm:w-5"
                       />
-                      <Label htmlFor={option.id} className="cursor-pointer">
+                      <Label htmlFor={option.id} className="cursor-pointer text-sm sm:text-base">
                         {option.label}
                       </Label>
                     </div>
@@ -119,26 +128,31 @@ export default function AddSoftwareForm({ onSuccess, onCancel }) {
             ))}
           </div>
           {form.formState.errors.accessLevels && (
-            <p className="text-sm font-medium text-red-500">
+            <p className="text-xs sm:text-sm font-medium text-red-500">
               {form.formState.errors.accessLevels.message}
             </p>
           )}
         </div>
         
         {error && (
-          <div className="text-red-500 text-sm">{error}</div>
+          <div className="text-red-500 text-xs sm:text-sm">{error}</div>
         )}
         
-        <div className="flex justify-end space-x-2">
+        <div className="flex flex-col sm:flex-row sm:justify-end space-y-2 sm:space-y-0 sm:space-x-2">
           <Button
             type="button"
             variant="outline"
             onClick={onCancel}
             disabled={isSubmitting}
+            className="w-full sm:w-auto text-sm sm:text-base"
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="w-full sm:w-auto text-sm sm:text-base"
+          >
             {isSubmitting ? 'Adding...' : 'Add Software'}
           </Button>
         </div>

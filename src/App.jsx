@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { useEffect } from 'react';
 
 import ProtectedRoute from './components/common/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
@@ -18,6 +19,22 @@ const AdminRequests = () => <div>All Requests Page</div>;
 const AdminUsers = () => <div>User Management Page</div>;
 
 function App() {
+  // Ensure proper viewport meta tag is set for mobile responsiveness
+  useEffect(() => {
+    // Check if viewport meta tag exists
+    let viewportMeta = document.querySelector('meta[name="viewport"]');
+    
+    // If it doesn't exist, create it
+    if (!viewportMeta) {
+      viewportMeta = document.createElement('meta');
+      viewportMeta.name = 'viewport';
+      document.head.appendChild(viewportMeta);
+    }
+    
+    // Set the content attribute to ensure proper mobile scaling
+    viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0';
+  }, []);
+
   return (
     <Router>
       <AuthProvider>

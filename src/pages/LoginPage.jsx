@@ -38,19 +38,19 @@ const LoginPage = () => {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6">Access Management System</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-8">
+      <div className="bg-white p-6 sm:p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 className="text-xl sm:text-2xl font-bold text-center mb-4 sm:mb-6">Access Management System</h1>
         
         <form onSubmit={formik.handleSubmit}>
           {successMessage && (
-            <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+            <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded text-sm">
               {successMessage}
             </div>
           )}
           
           {error && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
               {error}
             </div>
           )}
@@ -67,7 +67,7 @@ const LoginPage = () => {
                 formik.touched.username && formik.errors.username
                   ? 'border-red-500'
                   : 'border-gray-300'
-              }`}
+              } focus:outline-none focus:ring-2 focus:ring-blue-500`}
               placeholder="Enter your username"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -91,7 +91,7 @@ const LoginPage = () => {
                 formik.touched.password && formik.errors.password
                   ? 'border-red-500'
                   : 'border-gray-300'
-              }`}
+              } focus:outline-none focus:ring-2 focus:ring-blue-500`}
               placeholder="Enter your password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -105,7 +105,7 @@ const LoginPage = () => {
           
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 transition-colors"
             disabled={isLoading}
           >
             {isLoading ? 'Logging in...' : 'Log In'}

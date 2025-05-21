@@ -58,28 +58,33 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6">Create an Account</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-8">
+      <div className="bg-white p-6 sm:p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 className="text-xl sm:text-2xl font-bold text-center mb-4 sm:mb-6">Create an Account</h1>
         
         {error && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
             {error}
           </div>
         )}
         
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
             <FormField
               control={form.control}
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel className="text-sm font-medium">Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter username" {...field} disabled={isLoading} />
+                    <Input 
+                      placeholder="Enter username" 
+                      {...field} 
+                      disabled={isLoading} 
+                      className="w-full text-sm sm:text-base" 
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs sm:text-sm" />
                 </FormItem>
               )}
             />
@@ -89,11 +94,17 @@ const RegisterPage = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-sm font-medium">Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Create password" {...field} disabled={isLoading} />
+                    <Input 
+                      type="password" 
+                      placeholder="Create password" 
+                      {...field} 
+                      disabled={isLoading} 
+                      className="w-full text-sm sm:text-base" 
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs sm:text-sm" />
                 </FormItem>
               )}
             />
@@ -103,11 +114,17 @@ const RegisterPage = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel className="text-sm font-medium">Confirm Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Confirm password" {...field} disabled={isLoading} />
+                    <Input 
+                      type="password" 
+                      placeholder="Confirm password" 
+                      {...field} 
+                      disabled={isLoading} 
+                      className="w-full text-sm sm:text-base" 
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs sm:text-sm" />
                 </FormItem>
               )}
             />
@@ -117,14 +134,14 @@ const RegisterPage = () => {
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Role</FormLabel>
+                  <FormLabel className="text-sm font-medium">Role</FormLabel>
                   <Select 
                     onValueChange={field.onChange} 
                     defaultValue={field.value}
                     disabled={isLoading}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full text-sm sm:text-base">
                         <SelectValue placeholder="Select a role" />
                       </SelectTrigger>
                     </FormControl>
@@ -134,22 +151,26 @@ const RegisterPage = () => {
                       <SelectItem value="Admin">Admin</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormDescription>
+                  <FormDescription className="text-xs sm:text-sm text-gray-500">
                     Select your role in the organization
                   </FormDescription>
-                  <FormMessage />
+                  <FormMessage className="text-xs sm:text-sm" />
                 </FormItem>
               )}
             />
             
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button 
+              type="submit" 
+              className="w-full mt-2 transition-colors" 
+              disabled={isLoading}
+            >
               {isLoading ? "Creating Account..." : "Register"}
             </Button>
           </form>
         </Form>
         
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-xs sm:text-sm text-gray-600">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-600 hover:underline">
               Log in

@@ -44,12 +44,20 @@ const MainLayout = () => {
     navigate('/login');
   };
 
+  // Close sidebar when clicking outside on mobile
+  const handleOutsideClick = () => {
+    if (window.innerWidth < 768) {
+      setIsSidebarOpen(false);
+    }
+  };
+
   // Create an overlay when sidebar is open on mobile
   const Overlay = () => (
     isSidebarOpen && (
       <div 
         className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden" 
-        onClick={() => setIsSidebarOpen(false)}
+        onClick={handleOutsideClick}
+        aria-hidden="true"
       />
     )
   );
@@ -70,8 +78,9 @@ const MainLayout = () => {
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-700">
           <span className="text-xl font-semibold">Access Manager</span>
           <button
-            className="p-1 md:hidden hover:bg-gray-700 rounded"
+            className="p-1 md:hidden hover:bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-gray-400"
             onClick={() => setIsSidebarOpen(false)}
+            aria-label="Close sidebar"
           >
             <X className="h-6 w-6" />
           </button>
@@ -108,6 +117,7 @@ const MainLayout = () => {
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                     }
                   `}
+                  onClick={() => window.innerWidth < 768 && setIsSidebarOpen(false)}
                 >
                   {link.icon}
                   <span>{link.label}</span>
@@ -121,7 +131,7 @@ const MainLayout = () => {
         <div className="p-4 border-t border-gray-700">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors"
+            className="w-full flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
           >
             <LogOut className="h-5 w-5 mr-2" />
             <span>Logout</span>
@@ -132,18 +142,28 @@ const MainLayout = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col md:ml-64 relative">
         {/* Mobile Header */}
-        <header className="bg-white h-16 flex items-center md:hidden shadow-sm px-4 z-10">
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            className="p-1 rounded-lg hover:bg-gray-100"
-          >
-            <Menu className="h-6 w-6 text-gray-600" />
-          </button>
-          <h1 className="ml-4 font-semibold text-lg">Access Manager</h1>
+        <header className="bg-white h-16 flex items-center justify-between md:hidden shadow-sm px-4 z-10">
+          <div className="flex items-center">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="p-1 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              aria-label="Open menu"
+            >
+              <Menu className="h-6 w-6 text-gray-600" />
+            </button>
+            <h1 className="ml-4 font-semibold text-lg">Access Manager</h1>
+          </div>
+          <div className="mr-2">
+            {user && (
+              <div className="h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center uppercase font-bold text-white">
+                {user.username?.charAt(0) || 'U'}
+              </div>
+            )}
+          </div>
         </header>
         
         {/* Content Area */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 pb-16">
           <Outlet />
         </main>
       </div>
