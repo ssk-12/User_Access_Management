@@ -31,7 +31,7 @@ function App() {
               <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
               <Route path="/employee/requests" element={<EmployeeRequestsPage />} />
               <Route path="/employee/requests/new" element={<NewRequestPage />} />
-              <Route path="/employee/requests/:id" element={<EmployeeRequestDetail />} />
+              {/* <Route path="/employee/requests/:id" element={<EmployeeRequestDetail />} /> */}
             </Route>
           </Route>
 

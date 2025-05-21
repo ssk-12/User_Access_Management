@@ -132,7 +132,7 @@ const EmployeeRequestsPage = () => {
                     <th className="w-[150px]">Access Type</th>
                     <th className="w-[150px]">Status</th>
                     <th className="w-[150px]">Requested Date</th>
-                    <th className="w-[100px]">Actions</th>
+                    {/* <th className="w-[100px]">Actions</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -152,7 +152,7 @@ const EmployeeRequestsPage = () => {
                       <td className="p-2">
                         {new Date(request.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="p-2">
+                      {/* <td className="p-2">
                         <Button 
                           variant="outline" 
                           size="sm"
@@ -160,7 +160,7 @@ const EmployeeRequestsPage = () => {
                         >
                           View
                         </Button>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>

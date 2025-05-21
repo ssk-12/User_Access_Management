@@ -4,9 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import requestService from '../../services/requestService';
 import softwareService from '../../services/softwareService';
-
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";

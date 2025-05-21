@@ -104,9 +104,7 @@ const EmployeeDashboard = () => {
                 <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
+                
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -159,14 +157,7 @@ const EmployeeDashboard = () => {
                         {request.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <Link 
-                        to={`/employee/requests/${request.id}`}
-                        className="text-blue-500 hover:text-blue-700"
-                      >
-                        View
-                      </Link>
-                    </td>
+                    
                   </tr>
                 ))
               )}
