@@ -118,7 +118,7 @@ export default function ManagerRequestsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 overflow-x-auto">
       {actionSuccess && (
         <Alert className="bg-green-50 border-green-200 text-green-800">
           {actionSuccess}
@@ -132,7 +132,7 @@ export default function ManagerRequestsPage() {
         </Link>
       </div>
 
-      <div className="flex gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6">
         <Button 
           variant={filter === 'all' ? 'default' : 'outline'} 
           onClick={() => setFilter('all')}
@@ -167,67 +167,71 @@ export default function ManagerRequestsPage() {
           <p className="text-lg text-muted-foreground">No {filter !== 'all' ? filter : ''} requests found.</p>
         </div>
       ) : (
-        <ScrollArea className="h-[70vh]">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Requested By</TableHead>
-                <TableHead>Software</TableHead>
-                <TableHead>Access Type</TableHead>
-                <TableHead>Reason</TableHead>
-                <TableHead>Date Requested</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredRequests.map((request) => (
-                <TableRow key={request.id}>
-                  <TableCell className="font-medium">{request.user?.username || 'Unknown'}</TableCell>
-                  <TableCell>{request.software?.name || 'Unknown'}</TableCell>
-                  <TableCell>{request.accessType}</TableCell>
-                  <TableCell className="max-w-[200px] truncate" title={request.reason}>
-                    {request.reason?.slice(0, 50)}{request.reason?.length > 50 ? '...' : ''}
-                  </TableCell>
-                  <TableCell>{new Date(request.createdAt).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <Badge className={getStatusBadgeClass(request.status)}>
-                      {request.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {request.status === 'Pending' ? (
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="bg-green-50 text-green-600 hover:bg-green-100 border-green-200"
-                          onClick={() => handleAction(request, 'Approved')}
-                        >
-                          <CheckCircle2 className="h-4 w-4 mr-1" />
-                          Approve
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
-                          onClick={() => handleAction(request, 'Rejected')}
-                        >
-                          <XCircle className="h-4 w-4 mr-1" />
-                          Reject
-                        </Button>
-                      </div>
-                    ) : (
-                      <span className="text-sm text-muted-foreground">
-                        Updated by: {request.updatedBy?.username || 'Unknown'}
-                      </span>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </ScrollArea>
+        <div className="overflow-hidden border rounded-lg">
+          <ScrollArea className="h-[70vh]" orientation="both">
+            <div className="min-w-full">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Requested By</TableHead>
+                    <TableHead>Software</TableHead>
+                    <TableHead>Access Type</TableHead>
+                    <TableHead>Reason</TableHead>
+                    <TableHead>Date Requested</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredRequests.map((request) => (
+                    <TableRow key={request.id}>
+                      <TableCell className="font-medium">{request.user?.username || 'Unknown'}</TableCell>
+                      <TableCell>{request.software?.name || 'Unknown'}</TableCell>
+                      <TableCell>{request.accessType}</TableCell>
+                      <TableCell className="max-w-[200px] truncate" title={request.reason}>
+                        {request.reason?.slice(0, 50)}{request.reason?.length > 50 ? '...' : ''}
+                      </TableCell>
+                      <TableCell>{new Date(request.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell>
+                        <Badge className={getStatusBadgeClass(request.status)}>
+                          {request.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {request.status === 'Pending' ? (
+                          <div className="flex justify-end gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="bg-green-50 text-green-600 hover:bg-green-100 border-green-200"
+                              onClick={() => handleAction(request, 'Approved')}
+                            >
+                              <CheckCircle2 className="h-4 w-4 mr-1" />
+                              Approve
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
+                              onClick={() => handleAction(request, 'Rejected')}
+                            >
+                              <XCircle className="h-4 w-4 mr-1" />
+                              Reject
+                            </Button>
+                          </div>
+                        ) : (
+                          <span className="text-sm text-muted-foreground">
+                            Updated by: {request.updatedBy?.username || 'Unknown'}
+                          </span>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </ScrollArea>
+        </div>
       )}
 
       <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>

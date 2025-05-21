@@ -67,27 +67,27 @@ const EmployeeRequestsPage = () => {
 
   const RequestSkeletonRow = () => (
     <tr className="hover:bg-muted/50">
-      <td className="p-4 text-left align-middle"><Skeleton className="h-4 w-32" /></td>
-      <td className="p-4 text-left align-middle"><Skeleton className="h-4 w-24" /></td>
-      <td className="p-4 text-center align-middle"><Skeleton className="h-6 w-20 mx-auto" /></td>
-      <td className="p-4 text-left align-middle"><Skeleton className="h-4 w-24" /></td>
-      <td className="p-4 text-center align-middle"><Skeleton className="h-8 w-12 mx-auto" /></td>
+      <td className="p-2 sm:p-4 text-left align-middle"><Skeleton className="h-4 w-20 sm:w-32" /></td>
+      <td className="p-2 sm:p-4 text-left align-middle"><Skeleton className="h-4 w-16 sm:w-24" /></td>
+      <td className="p-2 sm:p-4 text-center align-middle"><Skeleton className="h-5 sm:h-6 w-16 sm:w-20 mx-auto" /></td>
+      <td className="p-2 sm:p-4 text-left align-middle"><Skeleton className="h-4 w-16 sm:w-24" /></td>
+      <td className="p-2 sm:p-4 text-center align-middle"><Skeleton className="h-7 sm:h-8 w-10 sm:w-12 mx-auto" /></td>
     </tr>
   );
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+    <div className="container mx-auto px-3 sm:px-6 py-3 sm:py-6 max-w-full">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold">My Access Requests</h1>
           {!loading && requestCounts && (
-            <div className="flex flex-wrap gap-2 mt-2 text-sm sm:text-base">
+            <div className="flex flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2 text-xs sm:text-sm">
               <span className="text-muted-foreground">Total: {requestCounts.total}</span>
-              <span className="text-muted-foreground">•</span>
+              <span className="text-muted-foreground hidden sm:inline">•</span>
               <span className="text-muted-foreground">Pending: {requestCounts.pending}</span>
-              <span className="text-muted-foreground">•</span>
+              <span className="text-muted-foreground hidden sm:inline">•</span>
               <span className="text-muted-foreground">Approved: {requestCounts.approved}</span>
-              <span className="text-muted-foreground">•</span>
+              <span className="text-muted-foreground hidden sm:inline">•</span>
               <span className="text-muted-foreground">Rejected: {requestCounts.rejected}</span>
             </div>
           )}
@@ -95,19 +95,19 @@ const EmployeeRequestsPage = () => {
         <Button onClick={handleNewRequest} className="w-full sm:w-auto">New Request</Button>
       </div>
 
-      <Card className="overflow-hidden">
-        <div className="p-4 sm:p-6">
-          {loading ? (
-            <ScrollArea className="h-[calc(100vh-250px)]">
-              <div className="overflow-x-auto">
-                <Table className="w-full table-fixed">
+      <Card>
+        {loading ? (
+          <div className="p-2 sm:p-4 md:p-6">
+            <ScrollArea className="h-[calc(100vh-220px)] sm:h-[calc(100vh-250px)]" orientation="both">
+              <div className="min-w-full">
+                <Table>
                   <thead>
                     <tr className="border-b">
-                      <th className="w-[25%] p-4 text-left font-medium">Software</th>
-                      <th className="w-[20%] p-4 text-left font-medium">Access Type</th>
-                      <th className="w-[15%] p-4 text-center font-medium">Status</th>
-                      <th className="w-[25%] p-4 text-left font-medium">Requested Date</th>
-                      <th className="w-[15%] p-4 text-center font-medium">Actions</th>
+                      <th className="w-[25%] p-2 sm:p-4 text-left text-xs sm:text-sm font-medium">Software</th>
+                      <th className="w-[20%] p-2 sm:p-4 text-left text-xs sm:text-sm font-medium">Access Type</th>
+                      <th className="w-[15%] p-2 sm:p-4 text-center text-xs sm:text-sm font-medium">Status</th>
+                      <th className="w-[25%] p-2 sm:p-4 text-left text-xs sm:text-sm font-medium">Requested Date</th>
+                      <th className="w-[15%] p-2 sm:p-4 text-center text-xs sm:text-sm font-medium">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -118,52 +118,54 @@ const EmployeeRequestsPage = () => {
                 </Table>
               </div>
             </ScrollArea>
-          ) : error ? (
-            <div className="text-center text-red-500 p-4">{error}</div>
-          ) : accessRequests.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-gray-500 mb-4">You don't have any access requests yet.</p>
-              <Button onClick={handleNewRequest} className="w-full sm:w-auto">Create Your First Request</Button>
-            </div>
-          ) : (
-            <ScrollArea className="h-[calc(100vh-250px)]">
-              <div className="overflow-x-auto">
-                <Table className="w-full table-fixed">
+          </div>
+        ) : error ? (
+          <div className="text-center text-red-500 p-4">{error}</div>
+        ) : accessRequests.length === 0 ? (
+          <div className="text-center py-6 sm:py-8">
+            <p className="text-gray-500 text-sm sm:text-base mb-3 sm:mb-4">You don't have any access requests yet.</p>
+            <Button onClick={handleNewRequest} className="w-full sm:w-auto">Create Your First Request</Button>
+          </div>
+        ) : (
+          <div className="overflow-hidden">
+            <ScrollArea orientation="both">
+              <div className="min-w-full">
+                <Table>
                   <thead>
                     <tr className="border-b">
-                      <th className="w-[25%] p-4 text-left font-medium">Software</th>
-                      <th className="w-[20%] p-4 text-left font-medium">Access Type</th>
-                      <th className="w-[15%] p-4 text-center font-medium">Status</th>
-                      <th className="w-[25%] p-4 text-left font-medium">Requested Date</th>
-                      <th className="w-[15%] p-4 text-center font-medium">Actions</th>
+                      <th className="w-[25%] p-2 sm:p-4 text-left text-xs sm:text-sm font-medium">Software</th>
+                      <th className="w-[20%] p-2 sm:p-4 text-left text-xs sm:text-sm font-medium">Access Type</th>
+                      <th className="w-[15%] p-2 sm:p-4 text-center text-xs sm:text-sm font-medium">Status</th>
+                      <th className="w-[25%] p-2 sm:p-4 text-left text-xs sm:text-sm font-medium">Requested Date</th>
+                      <th className="w-[15%] p-2 sm:p-4 text-center text-xs sm:text-sm font-medium">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {accessRequests.map((request) => (
                       <tr key={request.id} className="hover:bg-muted/50 border-b">
-                        <td className="p-4 text-left align-middle text-sm sm:text-base">
+                        <td className="p-2 sm:p-4 text-left align-middle text-xs sm:text-sm">
                           {request.software?.name || 'N/A'}
                         </td>
-                        <td className="p-4 text-left align-middle text-sm sm:text-base">
+                        <td className="p-2 sm:p-4 text-left align-middle text-xs sm:text-sm">
                           {request.accessType}
                         </td>
-                        <td className="p-4 text-center align-middle">
+                        <td className="p-2 sm:p-4 text-center align-middle">
                           <Badge 
                             variant={getStatusBadgeVariant(request.status)}
-                            className="capitalize text-xs sm:text-sm px-3 py-1 inline-block w-24 text-center"
+                            className="capitalize text-xs px-1.5 sm:px-3 py-0.5 sm:py-1 inline-block w-16 sm:w-24 text-center"
                           >
                             {request.status}
                           </Badge>
                         </td>
-                        <td className="p-4 text-left align-middle text-sm sm:text-base">
+                        <td className="p-2 sm:p-4 text-left align-middle text-xs sm:text-sm">
                           {new Date(request.createdAt).toLocaleDateString()}
                         </td>
-                        <td className="p-4 text-center align-middle">
+                        <td className="p-2 sm:p-4 text-center align-middle">
                           <Button 
                             variant="ghost" 
                             size="sm"
                             onClick={() => handleViewDetails(request.id)}
-                            className="px-4 mx-auto"
+                            className="h-7 sm:h-8 px-2 sm:px-4 text-xs sm:text-sm mx-auto"
                           >
                             View
                           </Button>
@@ -174,8 +176,8 @@ const EmployeeRequestsPage = () => {
                 </Table>
               </div>
             </ScrollArea>
-          )}
-        </div>
+          </div>
+        )}
       </Card>
     </div>
   );

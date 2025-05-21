@@ -12,14 +12,14 @@ const MainLayout = () => {
   const getNavLinks = () => {
     if (!user) return [];
 
-    if (user.role === 'admin') {
+    if (user.role.toLowerCase() === 'admin') {
       return [
         { to: '/admin/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-2" /> },
         { to: '/admin/requests', label: 'All Requests', icon: <ClipboardList className="h-5 w-5 mr-2" /> },
         { to: '/admin/software', label: 'Software', icon: <Package className="h-5 w-5 mr-2" /> },
         { to: '/admin/users', label: 'Users', icon: <Users className="h-5 w-5 mr-2" /> },
       ];
-    } else if (user.role === 'manager') {
+    } else if (user.role.toLowerCase() === 'manager') {
       return [
         { to: '/manager/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-2" /> },
         { to: '/manager/requests', label: 'Team Requests', icon: <ClipboardList className="h-5 w-5 mr-2" /> },

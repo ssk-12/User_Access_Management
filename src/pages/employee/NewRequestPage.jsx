@@ -67,23 +67,23 @@ const NewRequestPage = () => {
   }
 
   return (
-    <div className="container max-w-3xl mx-auto py-6 px-4">
-      <h1 className="text-3xl font-bold tracking-tight mb-6">New Access Request</h1>
+    <div className="container max-w-3xl mx-auto py-4 sm:py-6 px-4 sm:px-6 overflow-x-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4 sm:mb-6">New Access Request</h1>
       
-      <Card className="shadow-lg border-muted">
-        <CardHeader className="bg-muted/40">
-          <CardTitle>Request Details</CardTitle>
+      <Card className="shadow-lg border-muted min-w-[280px]">
+        <CardHeader className="bg-muted/40 px-4 sm:px-6 py-3 sm:py-4">
+          <CardTitle className="text-lg sm:text-xl">Request Details</CardTitle>
         </CardHeader>
         
-        <CardContent className="pt-6">
+        <CardContent className="pt-4 sm:pt-6 px-4 sm:px-6 overflow-y-auto">
           {error && (
-            <Alert variant="destructive" className="mb-6">
+            <Alert variant="destructive" className="mb-4 sm:mb-6">
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
           
-          <form onSubmit={formik.handleSubmit} className="space-y-6">
-            <div className="space-y-2">
+          <form onSubmit={formik.handleSubmit} className="space-y-4 sm:space-y-6">
+            <div className="space-y-1 sm:space-y-2">
               <Label htmlFor="software-select" className={formik.touched.softwareId && formik.errors.softwareId ? "text-destructive font-medium" : "font-medium"}>
                 Software
               </Label>
@@ -96,7 +96,7 @@ const NewRequestPage = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   disabled={submitLoading}
-                  className={`w-full h-11 px-3 py-2 rounded-md border ${
+                  className={`w-full h-10 sm:h-11 px-3 py-2 rounded-md border ${
                     formik.touched.softwareId && formik.errors.softwareId 
                     ? "border-destructive" 
                     : "border-input"
@@ -128,11 +128,11 @@ const NewRequestPage = () => {
               </div>
               
               {formik.touched.softwareId && formik.errors.softwareId && (
-                <p className="text-sm text-destructive font-medium">{formik.errors.softwareId}</p>
+                <p className="text-xs sm:text-sm text-destructive font-medium mt-1">{formik.errors.softwareId}</p>
               )}
             </div>
             
-            <div className="space-y-2">
+            <div className="space-y-1 sm:space-y-2">
               <Label className={formik.touched.accessType && formik.errors.accessType ? "text-destructive font-medium" : "font-medium"}>
                 Access Type
               </Label>
@@ -140,36 +140,36 @@ const NewRequestPage = () => {
                 value={formik.values.accessType}
                 onValueChange={(value) => formik.setFieldValue('accessType', value)}
                 disabled={submitLoading}
-                className="flex flex-col space-y-3 pt-1"
+                className="flex flex-col space-y-2 sm:space-y-3 pt-1"
               >
-                <div className="flex items-center space-x-3 rounded-md border p-3 hover:bg-muted/50">
+                <div className="flex items-center space-x-3 rounded-md border p-2 sm:p-3 hover:bg-muted/50">
                   <RadioGroupItem value="Read" id="accessTypeRead" />
                   <Label htmlFor="accessTypeRead" className="cursor-pointer font-normal">
                     <div className="font-medium">Read</div>
-                    <p className="text-sm text-muted-foreground">View only access to the software</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">View only access to the software</p>
                   </Label>
                 </div>
-                <div className="flex items-center space-x-3 rounded-md border p-3 hover:bg-muted/50">
+                <div className="flex items-center space-x-3 rounded-md border p-2 sm:p-3 hover:bg-muted/50">
                   <RadioGroupItem value="Write" id="accessTypeWrite" />
                   <Label htmlFor="accessTypeWrite" className="cursor-pointer font-normal">
                     <div className="font-medium">Write</div>
-                    <p className="text-sm text-muted-foreground">Create and modify data in the software</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Create and modify data in the software</p>
                   </Label>
                 </div>
-                <div className="flex items-center space-x-3 rounded-md border p-3 hover:bg-muted/50">
+                <div className="flex items-center space-x-3 rounded-md border p-2 sm:p-3 hover:bg-muted/50">
                   <RadioGroupItem value="Admin" id="accessTypeAdmin" />
                   <Label htmlFor="accessTypeAdmin" className="cursor-pointer font-normal">
                     <div className="font-medium">Admin</div>
-                    <p className="text-sm text-muted-foreground">Full control with administrative privileges</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Full control with administrative privileges</p>
                   </Label>
                 </div>
               </RadioGroup>
               {formik.touched.accessType && formik.errors.accessType && (
-                <p className="text-sm text-destructive font-medium">{formik.errors.accessType}</p>
+                <p className="text-xs sm:text-sm text-destructive font-medium mt-1">{formik.errors.accessType}</p>
               )}
             </div>
             
-            <div className="space-y-2">
+            <div className="space-y-1 sm:space-y-2">
               <Label htmlFor="reason" className={formik.touched.reason && formik.errors.reason ? "text-destructive font-medium" : "font-medium"}>
                 Reason for Request
               </Label>
@@ -182,21 +182,21 @@ const NewRequestPage = () => {
                 onBlur={formik.handleBlur}
                 value={formik.values.reason}
                 disabled={submitLoading}
-                className={`${formik.touched.reason && formik.errors.reason ? "border-destructive" : ""} resize-none min-h-32`}
+                className={`${formik.touched.reason && formik.errors.reason ? "border-destructive" : ""} resize-none min-h-24 sm:min-h-32`}
               />
               {formik.touched.reason && formik.errors.reason && (
-                <p className="text-sm text-destructive font-medium">{formik.errors.reason}</p>
+                <p className="text-xs sm:text-sm text-destructive font-medium mt-1">{formik.errors.reason}</p>
               )}
             </div>
           </form>
         </CardContent>
         
-        <CardFooter className="flex justify-end space-x-3 bg-muted/20 py-4 px-6 border-t">
+        <CardFooter className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 bg-muted/20 py-3 sm:py-4 px-4 sm:px-6 border-t">
           <Button
             variant="outline"
             onClick={() => navigate('/employee/requests')}
             disabled={submitLoading}
-            className="h-10"
+            className="w-full sm:w-auto h-9 sm:h-10"
           >
             Cancel
           </Button>
@@ -204,7 +204,7 @@ const NewRequestPage = () => {
             type="submit"
             onClick={formik.handleSubmit}
             disabled={submitLoading}
-            className="h-10"
+            className="w-full sm:w-auto h-9 sm:h-10"
           >
             {submitLoading ? (
               <>

@@ -3,6 +3,7 @@ import softwareService from '../../services/softwareService';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
+import { ScrollArea } from '../../components/ui/scroll-area';
 import AddSoftwareForm from '../../components/admin/AddSoftwareForm';
 
 export default function AdminSoftwarePage() {
@@ -70,43 +71,47 @@ export default function AdminSoftwarePage() {
             <CardTitle className="text-lg sm:text-xl">Software List</CardTitle>
           </CardHeader>
           <CardContent className="p-0 sm:p-0">
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">ID</TableHead>
-                    <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">Name</TableHead>
-                    <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">Description</TableHead>
-                    <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">Access Levels</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {softwareList.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={4} className="text-center py-4 text-xs sm:text-sm">
-                        No software found
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    softwareList.map((software) => (
-                      <TableRow key={software.id}>
-                        <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">{software.id}</TableCell>
-                        <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium">{software.name}</TableCell>
-                        <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">
-                          <div className="max-w-[200px] sm:max-w-none truncate">
-                            {software.description}
-                          </div>
-                        </TableCell>
-                        <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">
-                          <div className="max-w-[100px] sm:max-w-none truncate">
-                            {software.accessLevels.join(', ')}
-                          </div>
-                        </TableCell>
+            <div className="overflow-hidden">
+              <ScrollArea orientation="both">
+                <div className="min-w-full">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">ID</TableHead>
+                        <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">Name</TableHead>
+                        <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">Description</TableHead>
+                        <TableHead className="px-3 sm:px-4 py-3 text-xs sm:text-sm">Access Levels</TableHead>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {softwareList.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={4} className="text-center py-4 text-xs sm:text-sm">
+                            No software found
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        softwareList.map((software) => (
+                          <TableRow key={software.id}>
+                            <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">{software.id}</TableCell>
+                            <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium">{software.name}</TableCell>
+                            <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">
+                              <div className="max-w-[200px] sm:max-w-none truncate">
+                                {software.description}
+                              </div>
+                            </TableCell>
+                            <TableCell className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">
+                              <div className="max-w-[100px] sm:max-w-none truncate">
+                                {software.accessLevels.join(', ')}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              </ScrollArea>
             </div>
           </CardContent>
         </Card>
