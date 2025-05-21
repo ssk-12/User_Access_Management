@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import requestService from '../../services/requestService';
 import { useAuth } from '../../contexts/AuthContext';
+import { Skeleton } from '../../components/ui/skeleton';
 
 const EmployeeDashboard = () => {
   console.log('EmployeeDashboard - Component rendering');
@@ -15,42 +16,27 @@ const EmployeeDashboard = () => {
     approved: 0,
     rejected: 0
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     console.log('EmployeeDashboard - useEffect running');
     // Load data when component mounts
     const fetchDashboardData = async () => {
+      setIsLoading(true);
       try {
         console.log('EmployeeDashboard - Fetching dashboard data');
-        // You can replace this with actual API calls when ready
-        // For now using placeholder data
-        setRequestStatusCounts({
-          total: 5,
-          pending: 2,
-          approved: 2,
-          rejected: 1
-        });
         
-        setRecentRequests([
-          // Sample data - replace with actual API data
-          {
-            id: 1,
-            software: { name: 'Adobe Photoshop' },
-            accessType: 'READ',
-            createdAt: new Date().toISOString(),
-            status: 'PENDING'
-          },
-          {
-            id: 2,
-            software: { name: 'Microsoft Project' },
-            accessType: 'WRITE',
-            createdAt: new Date().toISOString(),
-            status: 'APPROVED'
-          }
-        ]);
-        console.log('EmployeeDashboard - Data fetched successfully');
+        const response = await requestService.getMyAccess();
+        const { requests, counts } = response.data;
+        
+        setRequestStatusCounts(counts);
+        setRecentRequests(requests.slice(0, 5));
+        
+        console.log('EmployeeDashboard - Data fetched successfully', response.data);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
     
@@ -65,22 +51,45 @@ const EmployeeDashboard = () => {
       
       {/* Request Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-gray-500 text-sm font-medium">Total Requests</h2>
-          <p className="mt-2 text-3xl font-bold">{requestStatusCounts.total}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-yellow-500 text-sm font-medium">Pending</h2>
-          <p className="mt-2 text-3xl font-bold">{requestStatusCounts.pending}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-green-500 text-sm font-medium">Approved</h2>
-          <p className="mt-2 text-3xl font-bold">{requestStatusCounts.approved}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-red-500 text-sm font-medium">Rejected</h2>
-          <p className="mt-2 text-3xl font-bold">{requestStatusCounts.rejected}</p>
-        </div>
+        {isLoading ? (
+          <>
+            <div className="bg-white rounded-lg shadow p-6">
+              <Skeleton className="h-5 w-32 mb-4" />
+              <Skeleton className="h-10 w-16" />
+            </div>
+            <div className="bg-white rounded-lg shadow p-6">
+              <Skeleton className="h-5 w-32 mb-4" />
+              <Skeleton className="h-10 w-16" />
+            </div>
+            <div className="bg-white rounded-lg shadow p-6">
+              <Skeleton className="h-5 w-32 mb-4" />
+              <Skeleton className="h-10 w-16" />
+            </div>
+            <div className="bg-white rounded-lg shadow p-6">
+              <Skeleton className="h-5 w-32 mb-4" />
+              <Skeleton className="h-10 w-16" />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-gray-500 text-sm font-medium">Total Requests</h2>
+              <p className="mt-2 text-3xl font-bold">{requestStatusCounts.total}</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-yellow-500 text-sm font-medium">Pending</h2>
+              <p className="mt-2 text-3xl font-bold">{requestStatusCounts.pending}</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-green-500 text-sm font-medium">Approved</h2>
+              <p className="mt-2 text-3xl font-bold">{requestStatusCounts.approved}</p>
+            </div>
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-red-500 text-sm font-medium">Rejected</h2>
+              <p className="mt-2 text-3xl font-bold">{requestStatusCounts.rejected}</p>
+            </div>
+          </>
+        )}
       </div>
       
       {/* Recent Requests */}
@@ -114,7 +123,27 @@ const EmployeeDashboard = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {recentRequests.length === 0 ? (
+              {isLoading ? (
+                Array(5).fill(0).map((_, index) => (
+                  <tr key={`skeleton-${index}`}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Skeleton className="h-5 w-32" />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Skeleton className="h-5 w-24" />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Skeleton className="h-5 w-28" />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Skeleton className="h-5 w-20" />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Skeleton className="h-5 w-10" />
+                    </td>
+                  </tr>
+                ))
+              ) : recentRequests.length === 0 ? (
                 <tr>
                   <td colSpan="5" className="px-6 py-4 text-center text-sm text-gray-500">
                     No requests found. Create a new request.
@@ -134,9 +163,9 @@ const EmployeeDashboard = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-2 py-1 text-xs rounded-full ${
-                        request.status === 'APPROVED' 
+                        request.status === 'Approved' 
                           ? 'bg-green-100 text-green-800' 
-                          : request.status === 'REJECTED'
+                          : request.status === 'Rejected'
                             ? 'bg-red-100 text-red-800'
                             : 'bg-yellow-100 text-yellow-800'
                       }`}>

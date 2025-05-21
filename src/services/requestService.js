@@ -24,6 +24,10 @@ const updateRequestStatus = (id, status, comments) => {
   return api.patch(`/requests/${id}/status`, { status, comments });
 };
 
+const getMyAccess = () => {
+  return api.get('/requests/my-requests');
+};
+
 const requestService = {
   getAllRequests,
   getMyRequests,
@@ -31,6 +35,7 @@ const requestService = {
   getRequestById,
   createRequest,
   updateRequestStatus,
+  getMyAccess,
 };
 
 export default requestService; 

@@ -10,16 +10,16 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import EmployeeDashboard from './pages/employee/EmployeeDashboard';
 import NewRequestPage from './pages/employee/NewRequestPage';
+import EmployeeRequestsPage from './pages/employee/EmployeeRequestsPage';
+import AdminSoftwarePage from './pages/admin/AdminSoftwarePage';
 
 // Placeholder components for routes we'll implement later
-const EmployeeRequests = () => <div>My Requests Page</div>;
 const EmployeeRequestDetail = () => <div>Request Detail Page</div>;
 const ManagerDashboard = () => <div>Manager Dashboard</div>;
 const ManagerRequests = () => <div>Team Requests Page</div>;
 const ManagerRequestDetail = () => <div>Request Review Page</div>;
 const AdminDashboard = () => <div>Admin Dashboard</div>;
 const AdminRequests = () => <div>All Requests Page</div>;
-const AdminSoftware = () => <div>Software Management Page</div>;
 const AdminUsers = () => <div>User Management Page</div>;
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={['employee']} />}>
             <Route element={<MainLayout />}>
               <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
-              <Route path="/employee/requests" element={<EmployeeRequests />} />
+              <Route path="/employee/requests" element={<EmployeeRequestsPage />} />
               <Route path="/employee/requests/new" element={<NewRequestPage />} />
               <Route path="/employee/requests/:id" element={<EmployeeRequestDetail />} />
             </Route>
@@ -56,7 +56,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/requests" element={<AdminRequests />} />
-              <Route path="/admin/software" element={<AdminSoftware />} />
+              <Route path="/admin/software" element={<AdminSoftwarePage />} />
               <Route path="/admin/users" element={<AdminUsers />} />
             </Route>
           </Route>

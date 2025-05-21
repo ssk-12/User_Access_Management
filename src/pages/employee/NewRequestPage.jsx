@@ -5,6 +5,16 @@ import * as Yup from 'yup';
 import requestService from '../../services/requestService';
 import softwareService from '../../services/softwareService';
 
+// Import Shadcn components
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2 } from "lucide-react";
+
 const NewRequestPage = () => {
   const [software, setSoftware] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -54,152 +64,165 @@ const NewRequestPage = () => {
   });
 
   if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-[70vh]">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold mb-6">New Access Request</h1>
+    <div className="container max-w-3xl mx-auto py-6 px-4">
+      <h1 className="text-3xl font-bold tracking-tight mb-6">New Access Request</h1>
       
-      <div className="bg-white rounded-lg shadow-md p-6">
-        {error && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-            {error}
-          </div>
-        )}
+      <Card className="shadow-lg border-muted">
+        <CardHeader className="bg-muted/40">
+          <CardTitle>Request Details</CardTitle>
+        </CardHeader>
         
-        <form onSubmit={formik.handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="softwareId">
-              Software
-            </label>
-            <select
-              id="softwareId"
-              name="softwareId"
-              className={`w-full px-3 py-2 border rounded-md ${
-                formik.touched.softwareId && formik.errors.softwareId
-                  ? 'border-red-500'
-                  : 'border-gray-300'
-              }`}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.softwareId}
-              disabled={submitLoading}
-            >
-              <option value="">Select Software</option>
-              {software.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-            {formik.touched.softwareId && formik.errors.softwareId && (
-              <p className="mt-1 text-sm text-red-500">{formik.errors.softwareId}</p>
-            )}
-          </div>
+        <CardContent className="pt-6">
+          {error && (
+            <Alert variant="destructive" className="mb-6">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
           
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="accessType">
-              Access Type
-            </label>
-            <div className="mt-2 space-y-2">
-              <div className="flex items-center">
-                <input
-                  id="accessTypeRead"
-                  name="accessType"
-                  type="radio"
-                  value="READ"
+          <form onSubmit={formik.handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="software-select" className={formik.touched.softwareId && formik.errors.softwareId ? "text-destructive font-medium" : "font-medium"}>
+                Software
+              </Label>
+              
+              {/* Custom select to ensure selected value is displayed */}
+              <div className="relative">
+                <select
+                  id="software-select"
+                  name="softwareId"
+                  value={formik.values.softwareId}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  checked={formik.values.accessType === 'READ'}
                   disabled={submitLoading}
-                  className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                />
-                <label htmlFor="accessTypeRead" className="ml-2 block text-gray-700">
-                  Read (View only)
-                </label>
+                  className={`w-full h-11 px-3 py-2 rounded-md border ${
+                    formik.touched.softwareId && formik.errors.softwareId 
+                    ? "border-destructive" 
+                    : "border-input"
+                  } bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring appearance-none`}
+                >
+                  <option value="">Select Software</option>
+                  {software.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-4 w-4 opacity-50"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </div>
               </div>
-              <div className="flex items-center">
-                <input
-                  id="accessTypeWrite"
-                  name="accessType"
-                  type="radio"
-                  value="WRITE"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  checked={formik.values.accessType === 'WRITE'}
-                  disabled={submitLoading}
-                  className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                />
-                <label htmlFor="accessTypeWrite" className="ml-2 block text-gray-700">
-                  Write (Create and modify)
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="accessTypeAdmin"
-                  name="accessType"
-                  type="radio"
-                  value="ADMIN"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  checked={formik.values.accessType === 'ADMIN'}
-                  disabled={submitLoading}
-                  className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                />
-                <label htmlFor="accessTypeAdmin" className="ml-2 block text-gray-700">
-                  Admin (Full control)
-                </label>
-              </div>
+              
+              {formik.touched.softwareId && formik.errors.softwareId && (
+                <p className="text-sm text-destructive font-medium">{formik.errors.softwareId}</p>
+              )}
             </div>
-            {formik.touched.accessType && formik.errors.accessType && (
-              <p className="mt-1 text-sm text-red-500">{formik.errors.accessType}</p>
+            
+            <div className="space-y-2">
+              <Label className={formik.touched.accessType && formik.errors.accessType ? "text-destructive font-medium" : "font-medium"}>
+                Access Type
+              </Label>
+              <RadioGroup
+                value={formik.values.accessType}
+                onValueChange={(value) => formik.setFieldValue('accessType', value)}
+                disabled={submitLoading}
+                className="flex flex-col space-y-3 pt-1"
+              >
+                <div className="flex items-center space-x-3 rounded-md border p-3 hover:bg-muted/50">
+                  <RadioGroupItem value="Read" id="accessTypeRead" />
+                  <Label htmlFor="accessTypeRead" className="cursor-pointer font-normal">
+                    <div className="font-medium">Read</div>
+                    <p className="text-sm text-muted-foreground">View only access to the software</p>
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-3 rounded-md border p-3 hover:bg-muted/50">
+                  <RadioGroupItem value="Write" id="accessTypeWrite" />
+                  <Label htmlFor="accessTypeWrite" className="cursor-pointer font-normal">
+                    <div className="font-medium">Write</div>
+                    <p className="text-sm text-muted-foreground">Create and modify data in the software</p>
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-3 rounded-md border p-3 hover:bg-muted/50">
+                  <RadioGroupItem value="Admin" id="accessTypeAdmin" />
+                  <Label htmlFor="accessTypeAdmin" className="cursor-pointer font-normal">
+                    <div className="font-medium">Admin</div>
+                    <p className="text-sm text-muted-foreground">Full control with administrative privileges</p>
+                  </Label>
+                </div>
+              </RadioGroup>
+              {formik.touched.accessType && formik.errors.accessType && (
+                <p className="text-sm text-destructive font-medium">{formik.errors.accessType}</p>
+              )}
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="reason" className={formik.touched.reason && formik.errors.reason ? "text-destructive font-medium" : "font-medium"}>
+                Reason for Request
+              </Label>
+              <Textarea
+                id="reason"
+                name="reason"
+                placeholder="Please explain why you need access to this software"
+                rows={4}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.reason}
+                disabled={submitLoading}
+                className={`${formik.touched.reason && formik.errors.reason ? "border-destructive" : ""} resize-none min-h-32`}
+              />
+              {formik.touched.reason && formik.errors.reason && (
+                <p className="text-sm text-destructive font-medium">{formik.errors.reason}</p>
+              )}
+            </div>
+          </form>
+        </CardContent>
+        
+        <CardFooter className="flex justify-end space-x-3 bg-muted/20 py-4 px-6 border-t">
+          <Button
+            variant="outline"
+            onClick={() => navigate('/employee/requests')}
+            disabled={submitLoading}
+            className="h-10"
+          >
+            Cancel
+          </Button>
+          <Button 
+            type="submit"
+            onClick={formik.handleSubmit}
+            disabled={submitLoading}
+            className="h-10"
+          >
+            {submitLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              'Submit Request'
             )}
-          </div>
-          
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="reason">
-              Reason for Request
-            </label>
-            <textarea
-              id="reason"
-              name="reason"
-              rows="4"
-              className={`w-full px-3 py-2 border rounded-md ${
-                formik.touched.reason && formik.errors.reason
-                  ? 'border-red-500'
-                  : 'border-gray-300'
-              }`}
-              placeholder="Please explain why you need access to this software"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.reason}
-              disabled={submitLoading}
-            ></textarea>
-            {formik.touched.reason && formik.errors.reason && (
-              <p className="mt-1 text-sm text-red-500">{formik.errors.reason}</p>
-            )}
-          </div>
-          
-          <div className="flex items-center justify-end space-x-3">
-            <button
-              type="button"
-              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-              onClick={() => navigate('/employee/requests')}
-              disabled={submitLoading}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md"
-              disabled={submitLoading}
-            >
-              {submitLoading ? 'Submitting...' : 'Submit Request'}
-            </button>
-          </div>
-        </form>
-      </div>
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 };
