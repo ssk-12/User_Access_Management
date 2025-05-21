@@ -36,7 +36,6 @@ const EmployeeRequestsPage = () => {
         setError(null);
       } catch (err) {
         setError('Failed to fetch access requests. Please try again later.');
-        console.error('Error fetching access requests:', err);
       } finally {
         setLoading(false);
       }

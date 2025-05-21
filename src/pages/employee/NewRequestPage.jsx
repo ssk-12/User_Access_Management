@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import requestService from '../../services/requestService';
 import softwareService from '../../services/softwareService';
 
-// Import Shadcn components
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -30,7 +29,6 @@ const NewRequestPage = () => {
         setSoftware(response.data);
       } catch (err) {
         setError('Failed to load software list');
-        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -57,7 +55,6 @@ const NewRequestPage = () => {
         navigate('/employee/requests', { state: { success: true } });
       } catch (err) {
         setError('Failed to submit request. Please try again.');
-        console.error(err);
         setSubmitLoading(false);
       }
     },
@@ -93,7 +90,6 @@ const NewRequestPage = () => {
                 Software
               </Label>
               
-              {/* Custom select to ensure selected value is displayed */}
               <div className="relative">
                 <select
                   id="software-select"

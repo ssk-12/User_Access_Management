@@ -8,10 +8,6 @@ const MainLayout = ({ children }) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  console.log('MainLayout - Rendering with user:', user);
-  console.log('MainLayout - Current pathname:', location.pathname);
-
-  // Define navigation links based on user role
   const getNavLinks = () => {
     if (!user) return [];
 
@@ -37,9 +33,7 @@ const MainLayout = ({ children }) => {
   };
 
   const navLinks = getNavLinks();
-  console.log('MainLayout - Nav links:', navLinks);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
@@ -51,7 +45,6 @@ const MainLayout = ({ children }) => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
       <aside className={`bg-gray-800 text-white w-64 fixed inset-y-0 left-0 transform ${
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       } md:translate-x-0 transition duration-200 ease-in-out z-30`}>
@@ -86,9 +79,7 @@ const MainLayout = ({ children }) => {
         </nav>
       </aside>
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col md:ml-64">
-        {/* Top header */}
         <header className="bg-white h-16 flex items-center justify-between shadow-sm px-6 z-10">
           <button
             className="md:hidden"
@@ -117,7 +108,6 @@ const MainLayout = ({ children }) => {
           </div>
         </header>
         
-        {/* Main content */}
         <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>

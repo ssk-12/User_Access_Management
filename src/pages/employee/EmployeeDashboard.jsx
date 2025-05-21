@@ -5,9 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Skeleton } from '../../components/ui/skeleton';
 
 const EmployeeDashboard = () => {
-  console.log('EmployeeDashboard - Component rendering');
   const { user } = useAuth();
-  console.log('EmployeeDashboard - Current user:', user);
   
   const [recentRequests, setRecentRequests] = useState([]);
   const [requestStatusCounts, setRequestStatusCounts] = useState({
@@ -19,22 +17,15 @@ const EmployeeDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log('EmployeeDashboard - useEffect running');
-    // Load data when component mounts
     const fetchDashboardData = async () => {
       setIsLoading(true);
       try {
-        console.log('EmployeeDashboard - Fetching dashboard data');
-        
         const response = await requestService.getMyAccess();
         const { requests, counts } = response.data;
         
         setRequestStatusCounts(counts);
         setRecentRequests(requests.slice(0, 5));
-        
-        console.log('EmployeeDashboard - Data fetched successfully', response.data);
       } catch (error) {
-        console.error('Error fetching dashboard data:', error);
       } finally {
         setIsLoading(false);
       }
@@ -43,13 +34,10 @@ const EmployeeDashboard = () => {
     fetchDashboardData();
   }, []);
   
-  console.log('EmployeeDashboard - Rendering with data:', { requestStatusCounts, recentRequests });
-  
   return (
     <div className="employee-dashboard">
       <h1 className="text-2xl font-semibold mb-6">Employee Dashboard</h1>
       
-      {/* Request Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         {isLoading ? (
           <>
@@ -92,7 +80,6 @@ const EmployeeDashboard = () => {
         )}
       </div>
       
-      {/* Recent Requests */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-lg font-semibold">Recent Requests</h2>

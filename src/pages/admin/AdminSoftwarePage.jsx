@@ -18,7 +18,6 @@ export default function AdminSoftwarePage() {
       const response = await softwareService.getAllSoftware();
       setSoftwareList(response.data);
     } catch (error) {
-      console.error('Error fetching software:', error);
       setIsError(true);
     } finally {
       setIsLoading(false);

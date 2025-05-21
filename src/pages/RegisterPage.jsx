@@ -35,7 +35,7 @@ const RegisterPage = () => {
       username: "",
       password: "",
       confirmPassword: "",
-      role: "Employee", // Default role
+      role: "Employee",
     },
   });
 
@@ -44,7 +44,6 @@ const RegisterPage = () => {
     setError(null);
     
     try {
-      // Remove confirmPassword as it's not needed for the API
       const { confirmPassword, ...registrationData } = values;
       
       await authService.register(registrationData);
@@ -53,7 +52,6 @@ const RegisterPage = () => {
       });
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Please try again.');
-      console.error(err);
     } finally {
       setIsLoading(false);
     }
