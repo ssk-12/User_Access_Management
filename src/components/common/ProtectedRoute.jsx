@@ -22,8 +22,14 @@ const ProtectedRoute = ({
     return <Navigate to={redirectPath} replace />;
   }
 
+  // Case-insensitive role check
+  const hasAllowedRole = allowedRoles.length === 0 || 
+    allowedRoles.some(role => 
+      user.role.toLowerCase() === role.toLowerCase()
+    );
+
   // Check if user role is allowed
-  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+  if (!hasAllowedRole) {
     // Redirect based on user role
     let rolePath = '/';
     if (user.role.toLowerCase() === 'admin') {
