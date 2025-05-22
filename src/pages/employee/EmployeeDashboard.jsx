@@ -91,79 +91,77 @@ const EmployeeDashboard = () => {
           </Link>
         </div>
         
-        <ScrollArea orientation="both">
-          <div className="min-w-full">
-            <table className="min-w-[500px] text-left">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-2 sm:px-6 py-1.5 sm:py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Software
-                  </th>
-                  <th className="px-2 sm:px-6 py-1.5 sm:py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Access Type
-                  </th>
-                  <th className="px-2 sm:px-6 py-1.5 sm:py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Requested On
-                  </th>
-                  <th className="px-2 sm:px-6 py-1.5 sm:py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {isLoading ? (
-                  Array(5).fill(0).map((_, index) => (
-                    <tr key={`skeleton-${index}`}>
-                      <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
-                        <Skeleton className="h-4 sm:h-5 w-16 sm:w-32" />
-                      </td>
-                      <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
-                        <Skeleton className="h-4 sm:h-5 w-12 sm:w-24" />
-                      </td>
-                      <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
-                        <Skeleton className="h-4 sm:h-5 w-14 sm:w-28" />
-                      </td>
-                      <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
-                        <Skeleton className="h-4 sm:h-5 w-12 sm:w-20" />
-                      </td>
-                    </tr>
-                  ))
-                ) : recentRequests.length === 0 ? (
-                  <tr>
-                    <td colSpan="4" className="px-2 sm:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm text-gray-500">
-                      No requests found. Create a new request.
+        <div className="w-full overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-2 sm:px-6 py-1.5 sm:py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Software
+                </th>
+                <th className="px-2 sm:px-6 py-1.5 sm:py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Access Type
+                </th>
+                <th className="px-2 sm:px-6 py-1.5 sm:py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Requested On
+                </th>
+                <th className="px-2 sm:px-6 py-1.5 sm:py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {isLoading ? (
+                Array(5).fill(0).map((_, index) => (
+                  <tr key={`skeleton-${index}`}>
+                    <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
+                      <Skeleton className="h-4 sm:h-5 w-16 sm:w-32" />
+                    </td>
+                    <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
+                      <Skeleton className="h-4 sm:h-5 w-12 sm:w-24" />
+                    </td>
+                    <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
+                      <Skeleton className="h-4 sm:h-5 w-14 sm:w-28" />
+                    </td>
+                    <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
+                      <Skeleton className="h-4 sm:h-5 w-12 sm:w-20" />
                     </td>
                   </tr>
-                ) : (
-                  recentRequests.map((request) => (
-                    <tr key={request.id}>
-                      <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap text-xs sm:text-sm">
-                        {request.software.name}
-                      </td>
-                      <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap text-xs sm:text-sm">
-                        {request.accessType}
-                      </td>
-                      <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap text-xs sm:text-sm">
-                        {new Date(request.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
-                        <span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs rounded-full ${
-                          request.status === 'Approved' 
-                            ? 'bg-green-100 text-green-800' 
-                            : request.status === 'Rejected'
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-yellow-100 text-yellow-800'
-                        }`}>
-                          {request.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </ScrollArea>
+                ))
+              ) : recentRequests.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="px-2 sm:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm text-gray-500">
+                    No requests found. Create a new request.
+                  </td>
+                </tr>
+              ) : (
+                recentRequests.map((request) => (
+                  <tr key={request.id}>
+                    <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap text-xs sm:text-sm">
+                      {request.software.name}
+                    </td>
+                    <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap text-xs sm:text-sm">
+                      {request.accessType}
+                    </td>
+                    <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap text-xs sm:text-sm">
+                      {new Date(request.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-2 sm:px-6 py-1.5 sm:py-4 whitespace-nowrap">
+                      <span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs rounded-full ${
+                        request.status === 'Approved' 
+                          ? 'bg-green-100 text-green-800' 
+                          : request.status === 'Rejected'
+                            ? 'bg-red-100 text-red-800'
+                            : 'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {request.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
       
       {/* Action Button */}
