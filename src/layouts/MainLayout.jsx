@@ -14,10 +14,10 @@ const MainLayout = () => {
 
     if (user.role.toLowerCase() === 'admin') {
       return [
-        { to: '/admin/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-2" /> },
-        { to: '/admin/requests', label: 'All Requests', icon: <ClipboardList className="h-5 w-5 mr-2" /> },
+        // { to: '/admin/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-2" /> },
+        // { to: '/admin/requests', label: 'All Requests', icon: <ClipboardList className="h-5 w-5 mr-2" /> },
         { to: '/admin/software', label: 'Software', icon: <Package className="h-5 w-5 mr-2" /> },
-        { to: '/admin/users', label: 'Users', icon: <Users className="h-5 w-5 mr-2" /> },
+        // { to: '/admin/users', label: 'Users', icon: <Users className="h-5 w-5 mr-2" /> },
       ];
     } else if (user.role.toLowerCase() === 'manager') {
       return [

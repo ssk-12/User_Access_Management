@@ -23,7 +23,7 @@ const ProtectedRoute = ({
   if (!hasAllowedRole) {
     let rolePath = '/';
     if (user.role.toLowerCase() === 'admin') {
-      rolePath = '/admin/dashboard';
+      rolePath = '/admin/software';
     } else if (user.role.toLowerCase() === 'manager') {
       rolePath = '/manager/dashboard';
     } else if (user.role.toLowerCase() === 'employee') {

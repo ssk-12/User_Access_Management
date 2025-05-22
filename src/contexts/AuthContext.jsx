@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       });
       
       if (decodedToken.role === 'admin') {
-        navigate('/admin/dashboard');
+        navigate('/admin/software');
       } else if (decodedToken.role === 'manager') {
         navigate('/manager/dashboard');
       } else {
