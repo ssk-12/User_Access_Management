@@ -7,7 +7,11 @@ A React application for managing software access requests within an organization
 - **Role-based Authentication**: Login with role-specific redirects
 - **Employee Features**: Dashboard, request creation, view request history
 - **Manager Features**: Review team access requests, approve/reject with comments
-- **Admin Features**: User management, software management, view all requests
+- **Admin Features**: 
+  - User management (create, edit, deactivate employees and managers)
+  - Software management
+  - View all requests
+  - System configuration
 - **Responsive Design**: Works on desktop and mobile devices
 
 ## Tech Stack
@@ -65,3 +69,30 @@ src/
 ├── services/           # API services
 └── assets/             # Static assets
 ```
+
+## Potential Enhancements
+
+🚀 Enhancements Based on SRS:
+1. Role-Based User Creation (Admin Panel)
+✅ Admin can create:
+
+👤 Employee
+
+👨‍💼 Manager
+
+🔐 Enforce role-specific access during creation & login.
+
+2. User Management Dashboard
+View, edit, or delete users.
+
+Filter users by role/status.
+
+- **Multi-factor Authentication**: Add additional security for sensitive operations
+- **Notification System**: Email/in-app notifications for request status changes
+- **Reports & Analytics**: Generate usage reports and visualize access patterns
+- **Bulk Operations**: Allow admins to approve/reject multiple requests at once
+- **Access Request Templates**: Pre-defined templates for common access patterns
+- **User Hierarchy Management**: Configure reporting structures for approval flows
+- **Audit Logging**: Enhanced tracking of all system activities
+- **Self-service Password Reset**: Allow users to reset their passwords
+- **Role-based Dashboard Widgets**: Customizable dashboard based on user role
