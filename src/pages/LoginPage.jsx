@@ -3,9 +3,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
+import { useToast } from '../components/ui/toast';
 
 const LoginPage = () => {
   const { login } = useAuth();
+  const { showToast } = useToast();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
@@ -28,9 +30,12 @@ const LoginPage = () => {
         const result = await login(values);
         if (!result.success) {
           setError(result.error);
+          showToast(result.error, 'error');
         }
       } catch (err) {
-        setError('An unexpected error occurred. Please try again.');
+        const errorMessage = 'An unexpected error occurred. Please try again.';
+        setError(errorMessage);
+        showToast(errorMessage, 'error');
       } finally {
         setIsLoading(false);
       }
