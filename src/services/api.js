@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api'; //https://user-access-management-api.onrender.com/api
+const API_URL = 'https://user-access-management-api.onrender.com/api'; //https://user-access-management-api.onrender.com/api http://localhost:3000/api
 
 const api = axios.create({
   baseURL: API_URL,
